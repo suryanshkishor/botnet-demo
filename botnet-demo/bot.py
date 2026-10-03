@@ -186,6 +186,32 @@ def simulate_destroy(sock, name, sandbox):
 
     send(sock, f"STATUS {name} DESTROY_COMPLETE")
 
+def cmd_append_file(sock, name, sandbox, arg):
+    try:
+        # arg looks like: "secret.txt This is my new text"
+        parts = arg.split(" ", 1)
+        if len(parts) < 2:
+            send(sock, f"{name} ERROR append: missing filename or content")
+            return
+            
+        filename = parts[0]
+        content = parts[1]
+        
+        # Securely resolve the path so it can't escape the demo folder
+        path = safe_resolve(sandbox, filename)
+        
+        if not os.path.isfile(path):
+            send(sock, f"{name} ERROR append: '{filename}' is not an existing file")
+            return
+            
+        with open(path, "a") as f:
+            f.write("\n" + content)
+            
+        send(sock, f"{name} APPENDED_FILE {filename}")
+    except SandboxViolation as e:
+        send(sock, f"{name} BLOCKED: {e}")
+    except Exception as e:
+        send(sock, f"{name} ERROR append: {e}")
 
 def listen_for_commands(sock, name, sandbox):
     with sock:
@@ -230,6 +256,8 @@ def listen_for_commands(sock, name, sandbox):
             elif cmd == "SHUTDOWN":
                 print(f"[{name}] shutting down (local demo only)")
                 break
+            elif cmd == "APPEND":
+                cmd_append_file(sock, name, sandbox, arg)
             else:
                 send(sock, f"{name} UNKNOWN_COMMAND {cmd}")
 

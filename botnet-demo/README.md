@@ -82,6 +82,9 @@ Type these into the "Raw command" box (GUI) or after `send <bot>` (CLI):
 | `DELETE_FOLDER <name>` | Deletes one subfolder inside the sandbox (not the sandbox root itself) |
 | `DESTROY` | Simulates a destructive payload: logs the "attack", then deletes the bot's entire sandbox folder and disconnects |
 | `SHUTDOWN` | Bot disconnects without destroying anything |
+| Creating a New File | CREATE warning.txt Your system has been compromised. |
+| Changing / Modifying that File | CREATE warning.txt Pay 100 Bitcoin to unlock your files.|
+
 
 In the GUI, **Broadcast** sends whatever is in the raw command box to every
 connected bot at once — this is what demonstrates the "one controller, many
