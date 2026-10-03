@@ -84,7 +84,7 @@ Type these into the "Raw command" box (GUI) or after `send <bot>` (CLI):
 | `SHUTDOWN` | Bot disconnects without destroying anything |
 | Creating a New File | CREATE warning.txt Your system has been compromised. |
 | Changing / Modifying that File | CREATE warning.txt Pay 100 Bitcoin to unlock your files.|
-
+| APPEND command| APPEND warning.txt User opened the bank app.|
 
 In the GUI, **Broadcast** sends whatever is in the raw command box to every
 connected bot at once — this is what demonstrates the "one controller, many
